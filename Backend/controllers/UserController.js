@@ -1,4 +1,5 @@
 import user from "../models/users.model.js";
+// create 
 const Createuser = async (req, res) => {
   try {
     const { name, email, phone } = req.body;
@@ -22,7 +23,7 @@ const Createuser = async (req, res) => {
 const Getuser=async(req,res)=>{
     try {
         const User=await user.find()
-        if(!user){
+        if(!User){
             return res.status(404).json({success:false,message:"No user found"})
         }
         res.status(200).json({success:true,User})
@@ -32,5 +33,39 @@ const Getuser=async(req,res)=>{
     }
 
 }
+// Update User
+const Updateuser = async (req, res) => {
+  try {
+    const userId = req.params.id; 
+    console.log("User ID:", userId);
 
-export { Createuser,Getuser };
+    const updateuser = await user.findByIdAndUpdate(userId, req.body, { new: true });
+
+    if (!updateuser) {
+      return res.status(404).json({ success: false, message: "No user found" });
+    }
+
+    res.status(200).json({ success: true, updateuser });
+  } catch (error) {
+    console.log("Error in Updateuser:", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+// delete user 
+const Deleteuser=async(req,res)=>{
+  try {
+    const userId=req.params.id;
+    const deleteduser=await user.findByIdAndDelete(userId);
+    if(!deleteduser){
+      return res.status(404).json({success:false,message:"user not found"})
+    }
+    res.status(200).json({success:true,message:"user deleted successfully"})
+  } catch (error) {
+    console.log("Error in Updateuser:", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
+//
+export { Createuser, Getuser, Updateuser,Deleteuser};
