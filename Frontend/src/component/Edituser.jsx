@@ -1,81 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-export const Edituser = () => {
+export const Edituser = ({ user, refresh }) => {
+  const [value, setValue] = useState({
+    name: user.name || "",
+    email: user.email || "",
+    phone: user.phone || "",
+  });
+
+  const handlechange = (e) => {
+    setValue({ ...value, [e.target.name]: e.target.value });
+  };
+
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    toast.dismiss(); //
+
+    try {
+      const { data } = await axios.put(
+        `http://localhost:5000/api/update/${user._id}`,
+        value
+      );
+
+      if (data.success) {
+        toast.success("User updated successfully!", { duration: 2000 });
+        refresh(); // Table refresh
+      } else {
+        toast.error("Failed to update user!", { duration: 2000 });
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      toast.error("Something went wrong! Try again.", { duration: 2000 });
+    }
+  };
+
   return (
     <>
       <button
         type="button"
-        class="btn"
+        className="btn"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target={`#editModal${user._id}`}
       >
-        <i className=" bi bi-pencil text-primary fs-5"></i>
+        <i className="bi bi-pencil text-primary fs-5"></i>
       </button>
 
       <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        className="modal fade"
+        id={`editModal${user._id}`}
+        tabIndex="-1"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Edit User
-              </h1>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5">Edit User</h1>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
-              <div class="modal-body">
-                <div class="mb-3 row">
-                  <label for="Name" class="col-sm-2 col-form-label">
-                    Name
-                  </label>
-                  <div class="col-sm-10">
+            <div className="modal-body">
+              <form onSubmit={handlesubmit}>
+                <div className="mb-3 row">
+                  <label className="col-sm-2 col-form-label"> Name </label>
+                  <div className="col-sm-10">
                     <input
                       type="text"
-                      readonly
-                      class="form-control"
-                      id="Name"
+                      className="form-control"
+                      name="name"
+                      value={value.name}
+                      onChange={handlechange}
                     />
                   </div>
                 </div>
-                <div class="mb-3 row">
-                  <label for="Email" class="col-sm-2 col-form-label">
-                    Email
-                  </label>
-                  <div class="col-sm-10">
-                    <input type="email" class="form-control" id="Email" />
+                <div className="mb-3 row">
+                  <label className="col-sm-2 col-form-label"> Email </label>
+                  <div className="col-sm-10">
+                    <input
+                      type="email"
+                      className="form-control"
+                      name="email"
+                      value={value.email}
+                      onChange={handlechange}
+                    />
                   </div>
                 </div>
-                <div class="mb-3 row">
-                  <label for="Phone" class="col-sm-2 col-form-label">
-                    Phone
-                  </label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" id="Number" />
+                <div className="mb-3 row">
+                  <label className="col-sm-2 col-form-label"> Phone </label>
+                  <div className="col-sm-10">
+                    <input
+                      type="number"
+                      className="form-control"
+                      name="phone"
+                      value={value.phone}
+                      onChange={handlechange}
+                    />
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancel
-              </button>
-              <button type="button" class="btn btn-primary">
-                Update
-              </button>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-bs-dismiss="modal"
+                  >
+                    Update
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

@@ -50,7 +50,7 @@ export const CreateUser = () => {
         </button>
 
         <div
-          className="modal fade"
+          className="modal fade text-black"
           id="exampleModal1"
           tabIndex="-1"
           aria-labelledby="exampleModalLabel"
