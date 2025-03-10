@@ -18,7 +18,8 @@ export const CreateUser = () => {
     e.preventDefault();
     console.log(value);
     try {
-      const adduser = await axios.post("http://localhost:5000/api/create", value);
+      const adduser = await axios.post(`https://node-crud-mr63.onrender.com/api/create`, value);
+
       const res = adduser.data;
       if (res.success) {
         toast.success(res.message || "User added successfully!"); // Corrected toast message

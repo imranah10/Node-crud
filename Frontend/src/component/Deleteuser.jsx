@@ -7,9 +7,8 @@ export const Deleteuser = ({ userId, refresh }) => {
     toast.dismiss(); //
 
     try {
-      const { data } = await axios.delete(
-        `http://localhost:5000/api/delete/${userId}`
-      );
+      const { data } = await axios.delete(`https://node-crud-mr63.onrender.com/api/delete/${userId}`);
+
 
       if (data.success) {
         toast.success("User deleted successfully!", { duration: 2000 });

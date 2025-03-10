@@ -18,10 +18,8 @@ export const Edituser = ({ user, refresh }) => {
     toast.dismiss(); //
 
     try {
-      const { data } = await axios.put(
-        `http://localhost:5000/api/update/${user._id}`,
-        value
-      );
+      const { data } = await axios.put(`https://node-crud-mr63.onrender.com/api/update/${user._id}`, value);
+
 
       if (data.success) {
         toast.success("User updated successfully!", { duration: 2000 });
@@ -33,6 +31,7 @@ export const Edituser = ({ user, refresh }) => {
       console.error("Update error:", error);
       toast.error("Something went wrong! Try again.", { duration: 2000 });
     }
+    
   };
 
   return (
