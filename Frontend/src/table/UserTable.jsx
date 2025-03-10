@@ -1,5 +1,7 @@
 import React from "react";
 import { CreateUser } from "../component/CreateUser";
+import {  Edituser } from "../component/Edituser";
+import { Deleteuser } from "../component/Deleteuser";
 
 export const UserTable = () => {
   return (
@@ -20,9 +22,9 @@ export const UserTable = () => {
         <td>John Doe</td>
         <td>john.doe@example.com</td>
         <td>123-456-7890</td>
-        <td className="d-flex justify-content-center gap-3">
-          <i className=" bi bi-pencil text-primary fs-5"></i>
-          <i className="bi bi-trash3 text-danger fs-5"></i>
+        <td className="d-flex justify-content-center gap-3 ">
+        <Edituser/>
+         <Deleteuser/>
         </td>
       </tr>
     </tbody>
