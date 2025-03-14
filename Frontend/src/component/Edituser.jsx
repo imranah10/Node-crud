@@ -19,7 +19,7 @@ export const Edituser = ({ user, refresh }) => {
 
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/update/${user._id}`,
+        `https://node-crud-mr63.onrender.com/api/update/${user._id}`,
         value
       );
 

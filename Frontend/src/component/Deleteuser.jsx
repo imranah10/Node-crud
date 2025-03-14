@@ -8,7 +8,7 @@ export const Deleteuser = ({ userId, refresh }) => {
 
     try {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/delete/${userId}`
+        `https://node-crud-mr63.onrender.com/api/delete/${userId}`
       );
 
       if (data.success) {
